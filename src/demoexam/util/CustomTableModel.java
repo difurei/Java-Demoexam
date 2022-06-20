@@ -7,8 +7,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 @AllArgsConstructor
-public class CustomTableModel<T> extends AbstractTableModel
-{
+public class CustomTableModel<T> extends AbstractTableModel {
     private Class<T> cls;
     private String[] columnNames;
     private List<T> rows;
@@ -37,7 +36,12 @@ public class CustomTableModel<T> extends AbstractTableModel
 
     @Override
     public String getColumnName(int column) {
-        return columnNames[column];
+        return column < columnNames.length ? columnNames[column] : "Default title";
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return cls.getDeclaredFields()[columnIndex].getType();
     }
 
     public List<T> getRows() {
